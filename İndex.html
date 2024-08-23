@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="tr"> 
+ <head> 
+  <meta charset="UTF-8"> 
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+  <title>Çocuk Kodlama Uygulaması</title> 
+  <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: #aeeeee;
+        }
+        header {
+            background-color: #009688;
+            color: white;
+            padding: 10px;
+        }
+        #gameArea {
+            width: 400px;
+            height: 300px;
+            border: 2px solid #00796b;
+            margin: 20px auto;
+            position: relative;
+            background-image: url('background.jpg'); /* Hayvan arka planı */
+            background-size: cover;
+            overflow: hidden;
+        }
+        #animal {
+            width: 50px;
+            height: 50px;
+            background-image: url('animal.png'); /* Hayvan resmi */
+            background-size: cover;
+            position: absolute;
+            top: 125px;
+            left: 175px;
+        }
+        #controls {
+            margin: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #009688;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background-color: #00796b;
+        }
+        #nextButton {
+            display: none; /* İlk başta görünmez */
+        }
+    </style> 
+ </head> 
+ <body> 
+  <header> 
+   <h1>Çocuk Kodlama Uygulaması</h1> 
+   <p>Görev 1: Hayvanı hareket ettirin</p> 
+  </header> 
+  <main> 
+   <div id="gameArea"> 
+    <div id="animal"></div> 
+   </div> 
+   <div id="controls"> <button onclick="move('up')">Yukarı</button> <button onclick="move('down')">Aşağı</button> <button onclick="move('left')">Sola</button> <button onclick="move('right')">Sağa</button> 
+   </div> <button id="nextButton" onclick="goToNextLevel()">Sonraki Bölüm</button> 
+  </main> 
+  <script>
+        const animal = document.getElementById('animal');
+        const nextButton = document.getElementById('nextButton');
+        let topPosition = 125;
+        let leftPosition = 175;
+
+        function move(direction) {
+            const step = 10;
+            const gameArea = document.getElementById('gameArea');
+            const gameAreaWidth = gameArea.clientWidth;
+            const gameAreaHeight = gameArea.clientHeight;
+            const animalWidth = animal.clientWidth;
+            const animalHeight = animal.clientHeight;
+
+            switch(direction) {
+                case 'up':
+                    if (topPosition > 0) topPosition -= step;
+                    break;
+                case 'down':
+                    if (topPosition < gameAreaHeight - animalHeight) topPosition += step;
+                    break;
+                case 'left':
+                    if (leftPosition > 0) leftPosition -= step;
+                    break;
+                case 'right':
+                    if (leftPosition < gameAreaWidth - animalWidth) leftPosition += step;
+                    break;
+            }
+
+            animal.style.top = topPosition + 'px';
+            animal.style.left = leftPosition + 'px';
+            
+            // Görev tamamlandığında sonraki bölüme geçiş butonunu göster
+            if (topPosition === 0 && leftPosition === 0) {
+                nextButton.style.display = 'block';
+            }
+        }
+
+        function goToNextLevel() {
+            window.location.href = 'level2.html'; // Sonraki bölüme yönlendirme
+        }
+    </script> 
+ </body>
+</html>
